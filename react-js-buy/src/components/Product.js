@@ -1,5 +1,34 @@
 import React, {Component} from 'react';
 import VariantSelector from './VariantSelector';
+import Button from './Button';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  flex: 0 1 31%;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+`;
+
+const Title = styled.h5`
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  opacity: 0.7;
+`
+
+const Price = styled.span`
+  display: block;
+  font-size: 1.1rem;
+  opacity: 0.5;
+  margin-bottom: 0.4rem;
+`
+
+const Option = styled.label`
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+`
 
 class Product extends Component {
   constructor(props) {
@@ -55,17 +84,17 @@ class Product extends Component {
       );
     });
     return (
-      <div className="Product">
+      <Wrapper>
         {this.props.product.images.length ? <img src={variantImage.src} alt={`${this.props.product.title} product shot`}/> : null}
-        <h5 className="Product__title">{this.props.product.title}</h5>
-        <span className="Product__price">${variant.price}</span>
+        <Title>{this.props.product.title}</Title>
+        <Price>${variant.price}</Price>
         {variantSelectors}
-        <label className="Product__option">
+        <Option>
           Quantity
           <input min="1" type="number" defaultValue={variantQuantity} onChange={this.handleQuantityChange}></input>
-        </label>
-        <button className="Product__buy button" onClick={() => this.props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</button>
-      </div>
+        </Option>
+        <Button onClick={() => this.props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</Button>
+      </Wrapper>
     );
   }
 }

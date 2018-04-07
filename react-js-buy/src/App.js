@@ -1,6 +1,33 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
 import Products from './components/Products';
 import Cart from './components/Cart';
+
+const AppHeader = styled.header`
+  background-color: #222;
+  background-image: url('https://unsplash.it/1000/300?image=823');
+  background-size: cover;
+  color: white;
+  padding: 10px 10px;
+`
+
+const AppTitle = styled.div`
+  padding: 80px 20px;
+  text-align: center;
+`
+
+const AppViewCartWrapper = styled.div`
+  float: right;
+`
+
+const AppViewCart = styled.button`
+  font-size: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: white;
+`
 
 class App extends Component {
   constructor() {
@@ -78,18 +105,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App__header">
+      <div>
+        <AppHeader>
           {!this.state.isCartOpen &&
-            <div className="App__view-cart-wrapper">
-              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
-            </div>
+            <AppViewCartWrapper>
+              <AppViewCart onClick={()=> this.setState({isCartOpen: true})}>Cart</AppViewCart>
+            </AppViewCartWrapper>
           }
-          <div className="App__title">
+          <AppTitle>
             <h1>{this.state.shop.name}: React Example</h1>
             <h2>{this.state.shop.description}</h2>
-          </div>
-        </header>
+          </AppTitle>
+        </AppHeader>
         <Products
           products={this.state.products}
           client={this.props.client}

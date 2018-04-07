@@ -1,5 +1,58 @@
 import React from 'react';
 import LineItem from './LineItem';
+import Button from './Button';
+import styled from 'styled-components';
+
+const CartWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 350px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e5e5e5;
+  transform: translateX(100%);
+  transition: transform 0.15s ease-in-out;
+  ${props => props.CartOpen && `
+    transform: translateX(0);
+  ` }
+`
+const Header = styled.header`
+  padding: 20px;
+  border-bottom: 1px solid #e5e5e5;
+  flex: 0 0 auto;
+  display: inline-block;
+`
+const LineItems = styled.ul`
+  flex: 1 0 auto;
+  margin: 0;
+  padding: 20px;
+`
+const Footer = styled.footer`
+  padding: 20px;
+  border-top: 1px solid #e5e5e5;
+  flex: 0 0 auto;
+`
+const CartInfo = styled.div`
+  padding: 15px 20px 10px;
+`
+const Total = styled.div`
+  float: left;
+  text-transform: uppercase;
+  ${props => props.Small && `
+    font-size: 11px;
+  ` }
+`
+const Pricing = styled.div`
+  float: right;
+  > span {
+    margin-left: 5px;
+    font-size: 16px;
+    color: black;
+  }
+`
 
 const Cart = (props) => {
 
@@ -12,45 +65,47 @@ const Cart = (props) => {
         removeLineItemInCart={props.removeLineItemInCart}
         key={line_item.id.toString()}
         line_item={line_item}
-      />
-    );
-  });
+        />
+      );
+    }
+  );
 
   return (
-    <div className={`Cart ${props.isCartOpen ? 'Cart--open' : ''}`}>
-      <header className="Cart__header">
+    <CartWrapper CartOpen={props.isCartOpen}>
+      <Header>
         <h2>Your cart</h2>
-        <button
+        <Button
           onClick={props.handleCartClose}
-          className="Cart__close">
+          CartClose>
           ×
-        </button>
-      </header>
-      <ul className="Cart__line-items">
+        </Button>
+      </Header>
+      <LineItems>
         {line_items}
-      </ul>
-      <footer className="Cart__footer">
-        <div className="Cart-info clearfix">
-          <div className="Cart-info__total Cart-info__small">Subtotal</div>
-          <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.subtotalPrice}</span>
-          </div>
-        </div>
-        <div className="Cart-info clearfix">
-          <div className="Cart-info__total Cart-info__small">Taxes</div>
-          <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.totalTax}</span>
-          </div>
-        </div>
-        <div className="Cart-info clearfix">
-          <div className="Cart-info__total Cart-info__small">Total</div>
-          <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.totalPrice}</span>
-          </div>
-        </div>
-        <button className="Cart__checkout button" onClick={openCheckout}>Checkout</button>
-      </footer>
-    </div>
+      </LineItems>
+      <Footer>
+        <CartInfo>
+          <Total Small>Subtotal</Total>
+          <Pricing>
+            <span>$ {props.checkout.subtotalPrice}</span>
+          </Pricing>
+        </CartInfo>
+        <CartInfo>
+          <Total Small>Taxes</Total>
+          <Pricing>
+            <span>$ {props.checkout.totalTax}</span>
+          </Pricing>
+        </CartInfo>
+        <CartInfo>
+          <Total Small>Total</Total>
+          <Pricing>
+            <span>$ {props.checkout.totalPrice}</span>
+          </Pricing>
+        </CartInfo>
+
+        <Button CartCheckout onClick={openCheckout}>Checkout</Button>
+      </Footer>
+    </CartWrapper>
   )
 }
 
