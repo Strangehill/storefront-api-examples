@@ -1,4 +1,6 @@
 import React from 'react';
+import { func, string, array, object, arrayOf, shape } from 'prop-types';
+
 import Product from './Product';
 
 const Products = (props) => {
@@ -18,6 +20,23 @@ const Products = (props) => {
       {products}
     </div>
   );
+}
+
+Products.propTypes = {
+  addVariantToCart: func,
+  client: object,
+  products: arrayOf(
+    shape({
+      title: string,
+      options: arrayOf(
+        shape({
+          id: string,
+          name: string,
+          values: array
+        })
+      )
+    })
+  )
 }
 
 export default Products;
