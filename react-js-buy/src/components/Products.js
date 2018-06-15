@@ -1,7 +1,7 @@
 import React from 'react';
-import { func, string, array, object, arrayOf, shape } from 'prop-types';
+import PropTypes from 'prop-types';
 
-import Product from './Product';
+import Product, { ProductType } from './Product';
 
 const Products = (props) => {
   let products = props.products.map((product) => {
@@ -23,20 +23,9 @@ const Products = (props) => {
 }
 
 Products.propTypes = {
-  addVariantToCart: func,
-  client: object,
-  products: arrayOf(
-    shape({
-      title: string,
-      options: arrayOf(
-        shape({
-          id: string,
-          name: string,
-          values: array
-        })
-      )
-    })
-  )
+  addVariantToCart: PropTypes.func,
+  client: PropTypes.object,
+  products: PropTypes.arrayOf(ProductType)
 }
 
 export default Products;

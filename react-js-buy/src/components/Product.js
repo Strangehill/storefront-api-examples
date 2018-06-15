@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import VariantSelector from './VariantSelector';
 
 class Product extends Component {
@@ -69,5 +70,20 @@ class Product extends Component {
     );
   }
 }
+
+export const ProductType = PropTypes.shape({
+  addVariantToCart: PropTypes.func,
+  client: PropTypes.string,
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        values: PropTypes.array
+      })
+    )
+  })
+})
 
 export default Product;
