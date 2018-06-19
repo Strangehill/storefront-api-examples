@@ -15,11 +15,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.client.checkout.create().then((res) => {
-      this.setState({
-        checkout: res,
+    if (localStorage.hasOwnProperty("checkoutId")) {
+      const checkoutId = localStorage.getItem("checkoutId");
+      this.props.client.checkout.fetch(checkoutId).then((res) => {
+        this.setState({
+          checkout: res
+        });
+      })
+    }
+    else {
+      this.props.client.checkout.create().then((res) => {
+        this.setState({
+          checkout: res,
+        });
+        localStorage.setItem("checkoutId",res.id);
       });
-    });
+    }
 
     this.props.client.product.fetchAll().then((res) => {
       this.setState({
